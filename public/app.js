@@ -5,21 +5,37 @@ var SpotifyWebApi = require('spotify-web-api-node');
 var T = new Twit(config);	
 
 var spotify = new SpotifyWebApi();
+var randomAlbum = null;
+
 
 // get a list of elvis albums
-spotify.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
+var getAllAlbums = function(){
+  spotify.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
   .then(function(data) {
-    console.log('Artist albums', data.body);
+    getRandomAlbum(data.body.index);
   }, function(err) {
     console.error(err);
   });
 
-var setNewTrack = 
-
-var random = Math.floor((Math.random() * allElvis.length) + 1);
-var thisHoursElvis = allElvis[random];
-console.log(thisHoursElvis)
-
-var app = function(){
 
 }
+
+var getRandomAlbum = function(data){
+  var random = Math.floor((Math.random() * data.length) + 1);
+  var album = data[random];
+}
+
+var getAlbumTracks = function(albumId){
+  spotify.getAlbum(albumId);
+}
+
+
+
+var app = function(){
+  var all = getAllAlbums(getRandomAlbum);
+
+
+
+}
+
+app();
