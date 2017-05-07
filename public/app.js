@@ -40,7 +40,7 @@ var handleRequest = function(data){
 
 
 var getRandomAlbum = function(arrayOfAlbums){
-  var random = Math.floor((Math.random() * arrayOfAlbums.length) + 1);
+  var random = Math.floor(Math.random() * arrayOfAlbums.length);
   var randomAlbum = arrayOfAlbums[random].id;
   // console.log('random album id ', randomAlbum);
   getAlbumTracks(randomAlbum);
@@ -69,7 +69,7 @@ var getAlbumTracks = function(albumId){
 // }
 
 var getRandomTrack = function(tracks){
-  var random = Math.floor((Math.random() * tracks.length) + 1);
+  var random = Math.floor(Math.random() * tracks.length);
   randomTrack = tracks[random].external_urls.spotify;
   console.log(randomTrack);
   tweetTheThing(randomTrack);
