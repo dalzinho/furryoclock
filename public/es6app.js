@@ -38,12 +38,19 @@ const getTrack = () => {
 
 		.then(track => {
 			 T.post('statuses/update', {status: "Tick, tock, it's Furry O'Clock...\n" + track.external_urls.spotify},
-				 (err, data, response) => {
-					 if(response != 200){
-						 console.log(err);
-					 } else {
-						 console.log('One furries track, sent off to the twittersphere: ' + data);
-					 }
+				  (err, data, response) => {
+                    switch(response){
+                        case 187:
+                            console.log('Code 187. Retrying...')
+                            getTrack();
+                            break;
+                        case 200:
+                            console.log('Successfully posted!');
+                            break;
+                        default:
+                            console.log(err);
+
+                        }
 				})
 		})
 	})
