@@ -4,10 +4,19 @@ var Twit = require('twit');
 var SpotifyWebApi = require('spotify-web-api-node');
 var T = new Twit(config);
 var spotify = new SpotifyWebApi();
+require('es6-promise');
+require('isomorphic-fetch');
 
 //get list of Super Furry albums
 const getTrack = () => {
-	spotify.getArtistAlbums('0FOcXqJgJ1oq9XfzYTDZmZ', {limit: 35, offset: 1})
+
+
+    // fetch('https://api.spotify.com/v1/artists/0FOcXqJgJ1oq9XfzYTDZmZ/albums?album_type=album&market=gb&limit=35')
+    // .then(response => {
+    //         return response.json();
+    //     })
+
+    spotify.getArtistAlbums('0FOcXqJgJ1oq9XfzYTDZmZ', {limit: 35, offset: 1})
 
 	.then(data => {
 		//return random album id
