@@ -1,8 +1,8 @@
-const config = require('./config');
+// const config = require('./config');
 // ^^^ required for twitter api
 var Twit = require('twit');
 var SpotifyWebApi = require('spotify-web-api-node');
-var T = new Twit(config);
+// var T = new Twit(config);
 var spotify = new SpotifyWebApi();
 require('es6-promise');
 require('isomorphic-fetch');
@@ -11,19 +11,22 @@ require('isomorphic-fetch');
 const getTrack = () => {
 
 
-    // fetch('https://api.spotify.com/v1/artists/0FOcXqJgJ1oq9XfzYTDZmZ/albums?album_type=album&market=gb&limit=35')
-    // .then(response => {
-    //         return response.json();
-    //     })
-
-    spotify.getArtistAlbums('0FOcXqJgJ1oq9XfzYTDZmZ', {limit: 35, offset: 1})
+    fetch('https://api.spotify.com/v1/artists/0FOcXqJgJ1oq9XfzYTDZmZ/albums?album_type=album&market=gb&limit=35')
+    .then(response => {
+            return response.json();
+        })
 
 	.then(data => {
 		//return random album id
-		var array = data.body.items;
+	    // data.items.forEach(album => {
+            // console.log(album.name);
+            // });
+        var array = data.items;
 
 		var random = Math.floor(Math.random() * array.length);
-		return array[random].id;
+        const album = array[random];
+        console.log('selected album:', album.name);
+		return album.id;
 	})
 	.then(id => {
 		//get that album
@@ -33,8 +36,10 @@ const getTrack = () => {
 			var tracks = data.body.items;
 			var random = Math.floor(Math.random() * tracks.length);
 			var randomTrack = tracks[random];
+            console.log('track:', randomTrack.name);
 			return randomTrack;
-		})
+		    })
+
 		.then(track => {
 			 T.post('statuses/update', {status: "Tick, tock, it's Furry O'Clock...\n" + track.external_urls.spotify},
 				 (err, data, response) => {
