@@ -1,8 +1,8 @@
-// const config = require('./config');
+const config = require('./config');
 // ^^^ required for twitter api
 var Twit = require('twit');
 var SpotifyWebApi = require('spotify-web-api-node');
-// var T = new Twit(config);
+var T = new Twit(config);
 var spotify = new SpotifyWebApi();
 require('es6-promise');
 require('isomorphic-fetch');
@@ -17,10 +17,6 @@ const getTrack = () => {
         })
 
 	.then(data => {
-		//return random album id
-	    // data.items.forEach(album => {
-            // console.log(album.name);
-            // });
         var array = data.items;
 
 		var random = Math.floor(Math.random() * array.length);
