@@ -1,5 +1,6 @@
 const config = require('./config');
 // ^^^ required for twitter api
+const spotifyAccessToken = require('./spotifyAccessToken');
 var Twit = require('twit');
 var SpotifyWebApi = require('spotify-web-api-node');
 var T = new Twit(config);
@@ -9,18 +10,24 @@ require('isomorphic-fetch');
 
 //get list of Super Furry albums
 const getTrack = () => {
+// console.log(spotifyConfig);
 
+    spotify.setAccessToken(spotifyAccessToken);
 
-    fetch('https://api.spotify.com/v1/artists/0FOcXqJgJ1oq9XfzYTDZmZ/albums?album_type=album&limit=35')
-    .then(response => {
-            if(response.status != 200){
-                console.error('Album fetch error:', response.status, response.statusText);
-            }
-            return response.json();
-    })
-    .catch(error => {
-            console.log(error);
-        })
+    spotify.getArtistAlbums('0FOcXqJgJ1oq9XfzYTDZmZ', {limit:50, album_type:"album,single"})
+    .then(data => {
+        console.log(data.body);
+        return data.body;
+        }, err => {
+            console.error(err);
+            })
+    // fetch('https://api.spotify.com/v1/artists/0FOcXqJgJ1oq9XfzYTDZmZ/albums?album_type=album&limit=35')
+    // .then(response => {
+    //         if(response.status != 200){
+    //             console.error('Album fetch error:', response.status, response.statusText);
+    //         }
+            // return response.json();
+    // })
 
 	.then(data => {
         var array = data.items;

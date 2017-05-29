@@ -1,6 +1,7 @@
 const spotifyConfig = {
      clientId : '',
      clientSecret : '',
+     redirectUri: 'http://www.example.com/callback'
     };
 
 module.exports = spotifyConfig;
