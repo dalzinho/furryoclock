@@ -1,0 +1,6 @@
+const spotifyConfig = {
+     clientId : '',
+     clientSecret : '',
+    };
+
+module.exports = spotifyConfig;
