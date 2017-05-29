@@ -11,9 +11,15 @@ require('isomorphic-fetch');
 const getTrack = () => {
 
 
-    fetch('https://api.spotify.com/v1/artists/0FOcXqJgJ1oq9XfzYTDZmZ/albums?album_type=album&market=gb&limit=35')
+    fetch('https://api.spotify.com/v1/artists/0FOcXqJgJ1oq9XfzYTDZmZ/albums?album_type=album&limit=35')
     .then(response => {
+            if(response.status != 200){
+                console.error('Album fetch error:', response.status, response.statusText);
+            }
             return response.json();
+    })
+    .catch(error => {
+            console.log(error);
         })
 
 	.then(data => {
@@ -24,9 +30,12 @@ const getTrack = () => {
         console.log('selected album:', album.name);
 		return album.id;
 	})
+    .catch(response => {
+        console.log('Spotify album getter error:', response);
+        })
 	.then(id => {
 		//get that album
-		spotify.getAlbumTracks(id, {limit: 20, offset: 1})
+		spotify.getAlbumTracks(id, {limit: 30})
 		.then(data => {
 			// choose a random song from it
 			var tracks = data.body.items;
@@ -41,8 +50,7 @@ const getTrack = () => {
 				  (err, data, response) => {
                     switch(response){
                         case 187:
-                            console.log('Code 187. Retrying...')
-                            getTrack();
+                            console.log('Code 187. Duplicate tweet!')
                             break;
                         case 200:
                             console.log('Successfully posted!');
